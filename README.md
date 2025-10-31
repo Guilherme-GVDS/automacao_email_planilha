@@ -14,7 +14,7 @@ Este projeto foi criado para resolver uma tarefa que tenho diariamente, receber 
 
 ### Como rodar o projeto
 
-Primeiramente, deve-se executar o arquivo main.exe, o qual abrirá uma janela onde você deve inserir seu e-mail, senha (utilizando uma senha de aplicativo — é necessário acessar as configurações de segurança do e-mail para obter essa senha), o assunto para filtrar o e-mail correto e selecionar a plataforma de e-mail (Gmail ou Outlook). Após isso, o programa acessa e localiza o respectivo e-mail usando o assunto fornecido, baixa a planilha, faz as modificações necessárias (essas modificações foram feitas para corresponder à base_analise utilizada como exemplo — para utilizar outras planilhas, é necessário alterar os códigos no arquivo manipulacao.py) e importa os dados para a Base final.
+Primeiramente, deve-se executar o arquivo main.exe, o qual abrirá uma janela onde você deve inserir seu e-mail, senha (utilizando uma senha de aplicativo — é necessário acessar as configurações de segurança do e-mail para obter essa senha), o assunto para filtrar o e-mail correto (apenas os emails do dia atual são pesquisados) e selecionar a plataforma de e-mail (Gmail ou Outlook). Após isso, o programa acessa e localiza o respectivo e-mail usando o assunto fornecido, baixa a planilha, faz as modificações necessárias (essas modificações foram feitas para corresponder à base_analise utilizada como exemplo — para utilizar outras planilhas, é necessário alterar os códigos no arquivo manipulacao.py) e importa os dados para a Base final.
 
 ## Observações
 
