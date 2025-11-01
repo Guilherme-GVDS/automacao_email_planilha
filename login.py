@@ -97,7 +97,10 @@ class LoginApp:
         find = False
         email = self.email_entry.get().strip()
         senha = self.password_entry.get().strip()
-        imap_server = 'imap.gmail.com'
+        if self.gmail_hotmail_menu.get().strip() == 'Gmail':
+            imap_server = 'imap.gmail.com'
+        else:
+            imap_server = 'outlook.office365.com'
         key_word_filter = self.key_word_entry.get().strip().lower()
 
 
