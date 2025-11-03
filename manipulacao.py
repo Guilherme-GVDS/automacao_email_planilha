@@ -28,8 +28,8 @@ def manipular():
 
     desktop = pathlib.Path.home() / "Desktop" / "Base_Análise.xlsx"
 
-    base_final.to_excel(desktop)
-    base_final.to_excel(caminho_base_analise)
+    base_final.to_excel(desktop, index=False)
+    base_final.to_excel(caminho_base_analise, index=False)
 
 
 
