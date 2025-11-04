@@ -1,4 +1,4 @@
-# Automação de planilha usando arquivos do email (Gmail)
+# Automação de planilha usando o email (Gmail)
 
 Este projeto foi criado para resolver uma tarefa que tenho diariamente, receber um e-mail contendo uma planilha da qual preciso extrair apenas alguns dados específicos para integrar à minha base principal. Embora seja uma tarefa simples, ela demanda atenção e tempo, recursos que podem ser melhor aproveitados em outras atividades.
 
