@@ -22,7 +22,7 @@ Inicialmente, é necessário inserir na pasta Planilha_analise o arquivo no form
 Em seguida, deve-se executar o arquivo main.exe, o qual iniciará o sistema e abrirá uma interface gráfica solicitando três informações:
 
 * Endereço de e-mail (Gmail)
-* Senha (senha de aplicativo)
+* Senha ([senha de aplicativo](https://support.google.com/accounts/answer/185833?hl=pt-BR))
 * Assunto do e-mail que contém a planilha a ser baixada
 
 ⚠️ Importante: O sistema realiza a verificação apenas dos e-mails recebidos na data atual.
