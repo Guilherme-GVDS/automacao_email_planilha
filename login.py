@@ -3,10 +3,11 @@ from imbox import Imbox
 from datetime import datetime
 import os
 from pop_up_error import Login_error
-from manipulacao import manipular
+from verif_col import Verif
 from pop_up_nfound import Emailnfound
 from center import centralizar_janela
-
+import pathlib
+from PIL import Image
 
 class LoginApp:
     def __init__(self, janela):
@@ -16,53 +17,58 @@ class LoginApp:
 
     def interface(self):
         ctk.set_appearance_mode('dark')
-        centralizar_janela(self.janela,440,230)        
+        centralizar_janela(self.janela,800,500)        
         self.janela.title ('Login')
 
-        self.email_label = ctk.CTkLabel(self.janela, text='Email:', font=('', 20))
-        self.email_label.place (x=20, y=20)
+        self.images_foldes = pathlib.Path.cwd() /'imagens'
 
-        self.email_entry = ctk.CTkEntry(self.janela, width=200, height=20)
-        self.email_entry.place (x=20, y=50)
+        self.bg = ctk.CTkImage(light_image= Image.open(
+                                self.images_foldes/'main_interface.png'),
+                               dark_image=Image.open(self.images_foldes/'main_interface.png'),
+                               size=(800,500))
+        self.bg_label = ctk.CTkLabel (self.janela, text='', image= self.bg)
 
-        self.password_label = ctk.CTkLabel(self.janela, text='Senha:', font=('', 20))
-        self.password_label.place (x=20, y=100)
+        self.bg_label.pack()       
 
-        self.password_entry = ctk.CTkEntry(self.janela, width=200, height=20, show='*')
-        self.password_entry.place (x=20, y=130)
 
-        self.key_word = ctk.CTkLabel(self.janela,text=('Assunto:'),
-                                        width=60,height=20, font= ('', 20))
-        self.key_word.place(x=270, y=20)
+        self.email_entry = ctk.CTkEntry(self.janela, width=258,height=30,
+                                                bg_color= '#27262C',fg_color='#27262C',
+                                                placeholder_text='Email', border_color='#27262C',
+                                                text_color='#ffffff')
+        self.email_entry.place (x = 270, y=189)
 
-        self.key_word_entry = ctk.CTkEntry(self.janela, width=150, height=20)
-        self.key_word_entry.place(x=270, y=50)
+
+        self.password_entry = ctk.CTkEntry(self.janela, width=258,height=30, 
+                                                        fg_color='#27262C',
+                                                bg_color= '#27262C', placeholder_text='Senha',
+                                                border_color='#27262C', text_color='#ffffff',
+                                                show= '*')
+        self.password_entry.place (x = 270, y=226)
+
+
+        self.key_word_entry = ctk.CTkEntry(self.janela, width=258,height=30,
+                                                bg_color= '#27262C',fg_color='#27262C',
+                                                placeholder_text='Assunto', border_color='#27262C',
+                                                text_color='#ffffff')
+        self.key_word_entry.place(x=270, y=264)
         self.botao_enviar()
 
-        self.gmail_hotmail_menu = ctk.CTkOptionMenu (self.janela, values=['Hotmail','Gmail'],
-                                                     width=100, height=20, font=('', 20),
-                                                     fg_color= '#343638',
-                                                     button_hover_color= '#343638',
-                                                     button_color= '#343638')
-        self.gmail_hotmail_menu.place(x=270, y=130)
 
     
     def botao_enviar(self):
 
 
-        botao_login = ctk.CTkButton (self.janela, text=('Login'), width=40, height=30, 
-                                     command=self.run)
+        botao_login = ctk.CTkButton (self.janela, text=('Login'), width=250, height=30, 
+                                     command=self.run, bg_color='#4044ED', fg_color= '#4044ED',
+                                     hover_color='#4044ED')
 
-        botao_login.place(x=100, y=170)
+        botao_login.place(x=275, y=320)
  
 
     def conection_test (self):
         email = self.email_entry.get().strip()
         senha = self.password_entry.get().strip()
-        if self.gmail_hotmail_menu.get().strip() == 'Gmail':
-            imap_server = 'imap.gmail.com'
-        else:
-            imap_server = 'outlook.office365.com'
+        imap_server = 'imap.gmail.com'
             
         
         try:
@@ -78,6 +84,9 @@ class LoginApp:
         error_pop = ctk.CTkToplevel()
         Login_error(error_pop)   
 
+    def verif_colunas(self):
+        colunas_verif = ctk.CTkToplevel()
+        Verif(colunas_verif)       
         
     def nfound(self,assunto):
         nfound = ctk.CTkToplevel()
@@ -89,7 +98,6 @@ class LoginApp:
 
         if self.conection_test():
             self.logar()    
-            manipular()
         else:
             self.pop_error()
 
@@ -97,28 +105,21 @@ class LoginApp:
         find = False
         email = self.email_entry.get().strip()
         senha = self.password_entry.get().strip()
-        if self.gmail_hotmail_menu.get().strip() == 'Gmail':
-            imap_server = 'imap.gmail.com'
-        else:
-            imap_server = 'outlook.office365.com'
+        imap_server = 'imap.gmail.com'
+
         key_word_filter = self.key_word_entry.get().strip().lower()
 
 
-            
         with Imbox(imap_server, username=email, password=senha) as imbox:
 
             hoje = datetime.now()
-            hoje_dmy = datetime.now().strftime("%d-%b-%Y")
             mensagens = imbox.messages(date__on=hoje)
             pasta_hoje = 'Planilha_Hoje'
 
             os.makedirs(pasta_hoje, exist_ok=True)
 
-
             for uid, mensagem in mensagens:
                 assunto = mensagem.subject or ''
-                remetente = mensagem.sent_from[0]['email']
-                data = mensagem.date
                 if key_word_filter in assunto.lower():
 
                     find = True
@@ -132,12 +133,13 @@ class LoginApp:
                                 f.write(content)
                     
         if find:
-            self.janela.destroy()
-
+            self.janela.withdraw()      
+            self.verif_colunas()
         else:
             pass
 
             self.nfound(key_word_filter)
+        
         
 
 
